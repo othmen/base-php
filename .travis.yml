@@ -1,50 +1,36 @@
 language: bash
-services: docker
+
+sudo: required
+
+services:
+  - docker
 
 env:
-  - VERSION=7.2-rc VARIANT=stretch/cli
-  - VERSION=7.2-rc VARIANT=stretch/apache
-  - VERSION=7.2-rc VARIANT=stretch/fpm
-  - VERSION=7.2-rc VARIANT=stretch/zts
-  - VERSION=7.2-rc VARIANT=alpine3.6/cli
-  - VERSION=7.2-rc VARIANT=alpine3.6/fpm
-  - VERSION=7.2-rc VARIANT=alpine3.6/zts
-  - VERSION=7.1 VARIANT=jessie/cli
-  - VERSION=7.1 VARIANT=jessie/apache
-  - VERSION=7.1 VARIANT=jessie/fpm
-  - VERSION=7.1 VARIANT=jessie/zts
-  - VERSION=7.1 VARIANT=alpine3.4/cli
-  - VERSION=7.1 VARIANT=alpine3.4/fpm
-  - VERSION=7.1 VARIANT=alpine3.4/zts
-  - VERSION=7.0 VARIANT=jessie/cli
-  - VERSION=7.0 VARIANT=jessie/apache
-  - VERSION=7.0 VARIANT=jessie/fpm
-  - VERSION=7.0 VARIANT=jessie/zts
-  - VERSION=7.0 VARIANT=alpine3.4/cli
-  - VERSION=7.0 VARIANT=alpine3.4/fpm
-  - VERSION=7.0 VARIANT=alpine3.4/zts
-  - VERSION=5.6 VARIANT=jessie/cli
-  - VERSION=5.6 VARIANT=jessie/apache
-  - VERSION=5.6 VARIANT=jessie/fpm
-  - VERSION=5.6 VARIANT=jessie/zts
-  - VERSION=5.6 VARIANT=alpine3.4/cli
-  - VERSION=5.6 VARIANT=alpine3.4/fpm
-  - VERSION=5.6 VARIANT=alpine3.4/zts
+  global:
+    - LATEST_VERSION=7.1
+    - DOCKER_VERSION=17.06.2
+  matrix:
+    - VERSION=7.1 PHP_DEBUG=0
+    - VERSION=7.0 PHP_DEBUG=0
+    - VERSION=5.6 PHP_DEBUG=0
+    - VERSION=7.1 PHP_DEBUG=1
+    - VERSION=7.0 PHP_DEBUG=1
+    - VERSION=5.6 PHP_DEBUG=1
 
-install:
-  - git clone https://github.com/docker-library/official-images.git ~/official-images
-
-before_script:
-  - env | sort
-  - cd "$VERSION/$VARIANT"
-  - SUBVARIANT="${VARIANT#*/}"
-  - image="php:${VERSION}-${SUBVARIANT}-${VARIANT%/*}"
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce="${DOCKER_VERSION}~ce-0~ubuntu"
 
 script:
-  - travis_retry docker build -t "$image" .
-  - ~/official-images/test/run.sh "$image"
+  - cd ./"${VERSION}"
+  - make
 
-after_script:
-  - docker images
+after_success: |
+  if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
+    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+    make release
 
-# vim:set et ts=2 sw=2:
+    if [[ "${VERSION}" == "${LATEST_VERSION}" && "${PHP_DEBUG}" != 1 ]]; then
+      make release TAG="latest"
+    fi
+  fi
