@@ -22,7 +22,7 @@ before_install:
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce="${DOCKER_VERSION}~ce-0~ubuntu"
 
 script:
-  - cd ./"${VERSION}"
+  - cd ./"${VERSION}/alpine3.4/fpm"
   - make
 
 after_success: |
@@ -34,3 +34,8 @@ after_success: |
       make release TAG="latest"
     fi
   fi
+
+notifications:
+  on_failure: never
+  slack:
+    secure: "pRpradEsJnMugEHP+6TKifoUgjs6uQ9rWeoQqm0+DMSMTcX/fRueOrsE6Y/uxgR4xcCTFE1VsKKYc+5C24XGQYp0BkKcPn3l3eIdwCE9nnBprOxCYTsko52idNN4bYb9jWNh4Kzy8k3DoB1WCe6OqIRUFZbwOLl/6MLy+56Wk/J5AXOMx8k+pAvi6qViPrPMlxXBwQ0SwRzVLTtjWZBy6axsiM5zvqSvCv/li2KznT4+Pv7zjHLvwDA7GaVl44N1yPA9g34XbodU9dJj1iaK3Ah6K9NRH8GQyD7wx+k+YBQnd5ATubI9kHiNlnCVSgUzQz0chrPh1gH16vnzRGHQzoHHVQrO009rP6pxDIy1sueM6S4zy6OWOdW6BHt1qYw41pqhBcJMQsH1E4nC/Gt7HAjY0CFb5p55EKRRYtcCeAn0ClkRq3vyTr1mTbRdb4BkCTCPrBGbxyYETgkiL93DvKSZfcV2GkOQj6+03C6MzXACb49GeVS4qA49aseOVKtmBwwO72Pwl6HPMNF7uiI8aqXgPvUE82cY1DWu38+Cea0wnxe/gejX6pUCYrMsbLZiUhhCzDTAcv1enpfVxGIjj97cCvIhFGKloVhrpj+MP2rll0PZshXNO0QFU0jobgYr5n1fodmlGoNLpo7KTlGxLBNJhxcjCEtLHAclvFbY0M4="
