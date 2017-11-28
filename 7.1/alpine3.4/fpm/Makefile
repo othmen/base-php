@@ -1,10 +1,10 @@
 -include env_make
 
-TAG ?= 7.1.11
+TAG ?= 7.1.12
 PHP_DEBUG ?= 0
 
 REPO = wodby/base-php
-NAME = base-php-7.1.11
+NAME = base-php-7.1.12
 
 ifeq ($(PHP_DEBUG), 1)
     override TAG := $(TAG)-debug

@@ -22,10 +22,10 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 
 | Image tag (Dockerfile)                                                                              | PHP    | Alpine |
 | --------------------------------------------------------------------------------------------------- | ------ | ------ |
-| [7.1.11 (latest)](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby) | 7.1.11 | 3.6    |
+| [7.1.12 (latest)](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby) | 7.1.12 | 3.6    |
 | [7.0.26](https://github.com/wodby/base-php/tree/master/7.0/alpine3.4/fpm/Dockerfile.wodby)          | 7.0.26 | 3.6    |
 | [5.6.32](https://github.com/wodby/base-php/tree/master/5.6/alpine3.4/fpm/Dockerfile.wodby)          | 5.6.32 | 3.6    |
-| [7.1.11-debug](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby)    | 7.1.11 | 3.6    |
+| [7.1.12-debug](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby)    | 7.1.12 | 3.6    |
 | [7.0.26-debug](https://github.com/wodby/base-php/tree/master/7.0/alpine3.4/fpm/Dockerfile.wodby)    | 7.0.25 | 3.6    |
 | [5.6.32-debug](https://github.com/wodby/base-php/tree/master/5.6/alpine3.4/fpm/Dockerfile.wodby)    | 5.6.32 | 3.6    |
 
