@@ -20,13 +20,13 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 * [Travis CI builds](https://travis-ci.org/wodby/base-php) 
 * [Docker Hub](https://hub.docker.com/r/wodby/base-php)
 
-| Image tag (Dockerfile)                                                                              | PHP    | Alpine |
-| --------------------------------------------------------------------------------------------------- | ------ | ------ |
-| [7.1.12 (latest)](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby) | 7.1.12 | 3.6    |
-| [7.0.26](https://github.com/wodby/base-php/tree/master/7.0/alpine3.4/fpm/Dockerfile.wodby)          | 7.0.26 | 3.6    |
-| [5.6.32](https://github.com/wodby/base-php/tree/master/5.6/alpine3.4/fpm/Dockerfile.wodby)          | 5.6.32 | 3.6    |
-| [7.1.12-debug](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby)    | 7.1.12 | 3.6    |
-| [7.0.26-debug](https://github.com/wodby/base-php/tree/master/7.0/alpine3.4/fpm/Dockerfile.wodby)    | 7.0.25 | 3.6    |
-| [5.6.32-debug](https://github.com/wodby/base-php/tree/master/5.6/alpine3.4/fpm/Dockerfile.wodby)    | 5.6.32 | 3.6    |
+Supported tags and respective `Dockerfile` links:
+
+* `7.1.12`, `latest` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby)
+* `7.0.26` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.0/alpine3.4/fpm/Dockerfile.wodby)
+* `5.6.32` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/5.6/alpine3.4/fpm/Dockerfile.wodby)
+* `7.1.12-debug` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby)
+* `7.0.26-debug` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.0/alpine3.4/fpm/Dockerfile.wodby)
+* `5.6.32-debug` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/5.6/alpine3.4/fpm/Dockerfile.wodby)
 
 > Images with -debug tag run php compiled with --enable-debug flag
