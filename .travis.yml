@@ -25,7 +25,7 @@ before_install:
 
 script:
   - cd "${DIR}"
-  - make
+  - travis_retry make
 
 after_success: |
   if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
