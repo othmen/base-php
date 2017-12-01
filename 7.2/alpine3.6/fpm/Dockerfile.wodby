@@ -4,7 +4,9 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM alpine:3.6
+FROM wodby/alpine:3.6-1.0.0
+
+ARG PHP_DEBUG
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
@@ -105,6 +107,7 @@ RUN set -xe \
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
 	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
+	&& if [[ $PHP_DEBUG == 1 ]]; then php_debug_args="--enable-debug"; fi \
 	&& ./configure \
 		--build="$gnuArch" \
 		--with-config-file-path="$PHP_INI_DIR" \
@@ -129,9 +132,13 @@ RUN set -xe \
 		$(test "$gnuArch" = 's390x-linux-gnu' && echo '--without-pcre-jit') \
 		\
 		$PHP_EXTRA_CONFIGURE_ARGS \
+		\
+        $php_debug_args \
 	&& make -j "$(nproc)" \
 	&& make install \
-	&& { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
+	&& if [[ $PHP_DEBUG != 1 ]]; then \
+        { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
+        fi \
 	&& make clean \
 	&& cd / \
 	&& docker-php-source delete \

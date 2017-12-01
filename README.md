@@ -22,9 +22,11 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 
 Supported tags and respective `Dockerfile` links:
 
-* `7.1.12`, `latest` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby)
+* `7.2.0`, `latest` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.2/alpine3.6/fpm/Dockerfile.wodby)
+* `7.1.12` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby)
 * `7.0.26` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.0/alpine3.4/fpm/Dockerfile.wodby)
 * `5.6.32` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/5.6/alpine3.4/fpm/Dockerfile.wodby)
+* `7.2.0-debug` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.2/alpine3.6/fpm/Dockerfile.wodby)
 * `7.1.12-debug` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.1/alpine3.4/fpm/Dockerfile.wodby)
 * `7.0.26-debug` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/7.0/alpine3.4/fpm/Dockerfile.wodby)
 * `5.6.32-debug` [_(Dockerfile)_](https://github.com/wodby/base-php/tree/master/5.6/alpine3.4/fpm/Dockerfile.wodby)
