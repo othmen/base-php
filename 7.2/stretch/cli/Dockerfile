@@ -4,35 +4,29 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM alpine:3.4
+FROM debian:stretch-slim
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
 		autoconf \
-		dpkg-dev dpkg \
+		dpkg-dev \
 		file \
 		g++ \
 		gcc \
 		libc-dev \
 		make \
-		pkgconf \
+		pkg-config \
 		re2c
-RUN apk add --no-cache --virtual .persistent-deps \
+RUN apt-get update && apt-get install -y \
+		$PHPIZE_DEPS \
 		ca-certificates \
 		curl \
-		tar \
-		xz \
-# https://github.com/docker-library/php/issues/494
-		openssl
-
-# ensure www-data user exists
-RUN set -x \
-	&& addgroup -g 82 -S www-data \
-	&& adduser -u 82 -D -S -G www-data www-data
-# 82 is the standard uid/gid for "www-data" in Alpine
-# http://git.alpinelinux.org/cgit/aports/tree/main/apache2/apache2.pre-install?h=v3.3.2
-# http://git.alpinelinux.org/cgit/aports/tree/main/lighttpd/lighttpd.pre-install?h=v3.3.2
-# http://git.alpinelinux.org/cgit/aports/tree/main/nginx-initscripts/nginx-initscripts.pre-install?h=v3.3.2
+		libargon2-0 \
+		libedit2 \
+		libsqlite3-0 \
+		libxml2 \
+		xz-utils \
+	--no-install-recommends && rm -r /var/lib/apt/lists/*
 
 ENV PHP_INI_DIR /usr/local/etc/php
 RUN mkdir -p $PHP_INI_DIR/conf.d
@@ -50,17 +44,26 @@ ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
-ENV GPG_KEYS A917B1ECDA84AEC2B568FED6F50ABC807BD5DCD0 528995BFEDFBA7191D46839EF9BA0ADA31CBD89E
+ENV GPG_KEYS 1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC9FF8D3EE5AF27F
 
-ENV PHP_VERSION 7.1.12
-ENV PHP_URL="https://secure.php.net/get/php-7.1.12.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.1.12.tar.xz.asc/from/this/mirror"
-ENV PHP_SHA256="a0118850774571b1f2d4e30b4fe7a4b958ca66f07d07d65ebdc789c54ba6eeb3" PHP_MD5=""
+ENV PHP_VERSION 7.2.0
+ENV PHP_URL="https://secure.php.net/get/php-7.2.0.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.2.0.tar.xz.asc/from/this/mirror"
+ENV PHP_SHA256="87572a6b924670a5d4aac276aaa4a94321936283df391d702c845ffc112db095" PHP_MD5=""
 
 RUN set -xe; \
 	\
-	apk add --no-cache --virtual .fetch-deps \
-		gnupg \
-	; \
+	fetchDeps=' \
+		wget \
+	'; \
+	if ! command -v gpg > /dev/null; then \
+		fetchDeps="$fetchDeps \
+			dirmngr \
+			gnupg \
+		"; \
+	fi; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends $fetchDeps; \
+	rm -rf /var/lib/apt/lists/*; \
 	\
 	mkdir -p /usr/src; \
 	cd /usr/src; \
@@ -84,19 +87,22 @@ RUN set -xe; \
 		rm -rf "$GNUPGHOME"; \
 	fi; \
 	\
-	apk del .fetch-deps
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $fetchDeps
 
 COPY docker-php-source /usr/local/bin/
 
 RUN set -xe \
-	&& apk add --no-cache --virtual .build-deps \
-		$PHPIZE_DEPS \
-		coreutils \
-		curl-dev \
+	&& buildDeps=" \
+		$PHP_EXTRA_BUILD_DEPS \
+		libargon2-0-dev \
+		libcurl4-openssl-dev \
 		libedit-dev \
-		openssl-dev \
+		libsqlite3-dev \
+		libssl-dev \
 		libxml2-dev \
-		sqlite-dev \
+		zlib1g-dev \
+	" \
+	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
@@ -104,6 +110,11 @@ RUN set -xe \
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
 	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
+	&& debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)" \
+# https://bugs.php.net/bug.php?id=74125
+	&& if [ ! -d /usr/include/curl ]; then \
+		ln -sT "/usr/include/$debMultiarch/curl" /usr/local/include/curl; \
+	fi \
 	&& ./configure \
 		--build="$gnuArch" \
 		--with-config-file-path="$PHP_INI_DIR" \
@@ -117,6 +128,8 @@ RUN set -xe \
 		--enable-mbstring \
 # --enable-mysqlnd is included here because it's harder to compile after the fact than extensions are (since it's a plugin for several extensions, not an extension in itself)
 		--enable-mysqlnd \
+# https://wiki.php.net/rfc/argon2_password_hash (7.2+)
+		--with-password-argon2 \
 		\
 		--with-curl \
 		--with-libedit \
@@ -126,24 +139,17 @@ RUN set -xe \
 # bundled pcre does not support JIT on s390x
 # https://manpages.debian.org/stretch/libpcre3-dev/pcrejit.3.en.html#AVAILABILITY_OF_JIT_SUPPORT
 		$(test "$gnuArch" = 's390x-linux-gnu' && echo '--without-pcre-jit') \
+		--with-libdir="lib/$debMultiarch" \
 		\
 		$PHP_EXTRA_CONFIGURE_ARGS \
 	&& make -j "$(nproc)" \
 	&& make install \
-	&& { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
+	&& { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
 	&& make clean \
 	&& cd / \
 	&& docker-php-source delete \
 	\
-	&& runDeps="$( \
-		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
-			| tr ',' '\n' \
-			| sort -u \
-			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
-	)" \
-	&& apk add --no-cache --virtual .php-rundeps $runDeps \
-	\
-	&& apk del .build-deps \
+	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps \
 	\
 # https://github.com/docker-library/php/issues/443
 	&& pecl update-channels \
