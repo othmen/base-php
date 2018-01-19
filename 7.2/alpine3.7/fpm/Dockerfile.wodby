@@ -4,7 +4,9 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM wodby/alpine:3.7-1.0.0
+ARG BASE_IMAGE_TAG
+
+FROM wodby/alpine:${BASE_IMAGE_TAG}
 
 ARG PHP_DEBUG
 

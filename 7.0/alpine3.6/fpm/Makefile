@@ -1,6 +1,7 @@
 -include env_make
 
 PHP_VER ?= 7.0.27
+ALPINE_VER ?= 3.6
 
 REPO = wodby/base-php
 NAME = base-php-$(PHP_VER)
@@ -14,12 +15,21 @@ ifeq ($(TAG),)
     endif
 endif
 
+ifeq ($(BASE_IMAGE_STABILITY_TAG),)
+    BASE_IMAGE_TAG := $(ALPINE_VER)
+else
+    BASE_IMAGE_TAG := $(ALPINE_VER)-$(BASE_IMAGE_STABILITY_TAG)
+endif
+
 .PHONY: build test push shell run start stop logs clean release
 
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) -f Dockerfile.wodby --build-arg PHP_DEBUG=$(PHP_DEBUG) ./
+	docker build -t $(REPO):$(TAG) \
+		-f Dockerfile.wodby \
+		--build-arg PHP_DEBUG=$(PHP_DEBUG) \
+		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) ./
 
 test:
 	IMAGE=$(REPO):$(TAG) ./test.sh
