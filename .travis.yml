@@ -7,11 +7,11 @@ env:
   global:
     - LATEST_VERSION=7.1
   matrix:
-    - VERSION=7.2 PHP_DEBUG=0 DIR=./7.2/alpine3.6/fpm
+    - VERSION=7.2 PHP_DEBUG=0 DIR=./7.2/alpine3.7/fpm
     - VERSION=7.1 PHP_DEBUG=0 DIR=./7.1/alpine3.4/fpm
     - VERSION=7.0 PHP_DEBUG=0 DIR=./7.0/alpine3.4/fpm
     - VERSION=5.6 PHP_DEBUG=0 DIR=./5.6/alpine3.4/fpm
-    - VERSION=7.2 PHP_DEBUG=1 DIR=./7.2/alpine3.6/fpm
+    - VERSION=7.2 PHP_DEBUG=1 DIR=./7.2/alpine3.7/fpm
     - VERSION=7.1 PHP_DEBUG=1 DIR=./7.1/alpine3.4/fpm
     - VERSION=7.0 PHP_DEBUG=1 DIR=./7.0/alpine3.4/fpm
     - VERSION=5.6 PHP_DEBUG=1 DIR=./5.6/alpine3.4/fpm
