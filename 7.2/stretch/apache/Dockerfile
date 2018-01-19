@@ -6,6 +6,15 @@
 
 FROM debian:stretch-slim
 
+# prevent Debian's PHP packages from being installed
+# https://github.com/docker-library/php/pull/542
+RUN set -eux; \
+	{ \
+		echo 'Package: php*'; \
+		echo 'Pin: release *'; \
+		echo 'Pin-Priority: -1'; \
+	} > /etc/apt/preferences.d/no-debian-php
+
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
 		autoconf \
@@ -21,10 +30,6 @@ RUN apt-get update && apt-get install -y \
 		$PHPIZE_DEPS \
 		ca-certificates \
 		curl \
-		libargon2-0 \
-		libedit2 \
-		libsqlite3-0 \
-		libxml2 \
 		xz-utils \
 	--no-install-recommends && rm -r /var/lib/apt/lists/*
 
@@ -105,9 +110,9 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
 ENV GPG_KEYS 1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC9FF8D3EE5AF27F
 
-ENV PHP_VERSION 7.2.0
-ENV PHP_URL="https://secure.php.net/get/php-7.2.0.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.2.0.tar.xz.asc/from/this/mirror"
-ENV PHP_SHA256="87572a6b924670a5d4aac276aaa4a94321936283df391d702c845ffc112db095" PHP_MD5=""
+ENV PHP_VERSION 7.2.1
+ENV PHP_URL="https://secure.php.net/get/php-7.2.1.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.2.1.tar.xz.asc/from/this/mirror"
+ENV PHP_SHA256="6c6cf82fda6660ed963821eb0525214bb3547e8e29f447b9c15b2d8e6efd8822" PHP_MD5=""
 
 RUN set -xe; \
 	\
@@ -150,9 +155,11 @@ RUN set -xe; \
 
 COPY docker-php-source /usr/local/bin/
 
-RUN set -xe \
-	&& buildDeps=" \
-		$PHP_EXTRA_BUILD_DEPS \
+RUN set -eux; \
+	\
+	savedAptMark="$(apt-mark showmanual)"; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends \
 		libargon2-0-dev \
 		libcurl4-openssl-dev \
 		libedit-dev \
@@ -160,21 +167,24 @@ RUN set -xe \
 		libssl-dev \
 		libxml2-dev \
 		zlib1g-dev \
-	" \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
+		${PHP_EXTRA_BUILD_DEPS:-} \
+	; \
+	rm -rf /var/lib/apt/lists/*; \
 	\
-	&& export CFLAGS="$PHP_CFLAGS" \
+	export \
+		CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
 		LDFLAGS="$PHP_LDFLAGS" \
-	&& docker-php-source extract \
-	&& cd /usr/src/php \
-	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
-	&& debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)" \
+	; \
+	docker-php-source extract; \
+	cd /usr/src/php; \
+	gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
+	debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
 # https://bugs.php.net/bug.php?id=74125
-	&& if [ ! -d /usr/include/curl ]; then \
+	if [ ! -d /usr/include/curl ]; then \
 		ln -sT "/usr/include/$debMultiarch/curl" /usr/local/include/curl; \
-	fi \
-	&& ./configure \
+	fi; \
+	./configure \
 		--build="$gnuArch" \
 		--with-config-file-path="$PHP_INI_DIR" \
 		--with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
@@ -200,19 +210,33 @@ RUN set -xe \
 		$(test "$gnuArch" = 's390x-linux-gnu' && echo '--without-pcre-jit') \
 		--with-libdir="lib/$debMultiarch" \
 		\
-		$PHP_EXTRA_CONFIGURE_ARGS \
-	&& make -j "$(nproc)" \
-	&& make install \
-	&& { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
-	&& make clean \
-	&& cd / \
-	&& docker-php-source delete \
+		${PHP_EXTRA_CONFIGURE_ARGS:-} \
+	; \
+	make -j "$(nproc)"; \
+	make install; \
+	find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; \
+	make clean; \
+	cd /; \
+	docker-php-source delete; \
 	\
-	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps \
+# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
+	apt-mark auto '.*' > /dev/null; \
+	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
+	find /usr/local -type f -executable -exec ldd '{}' ';' \
+		| awk '/=>/ { print $(NF-1) }' \
+		| sort -u \
+		| xargs -r dpkg-query --search \
+		| cut -d: -f1 \
+		| sort -u \
+		| xargs -r apt-mark manual \
+	; \
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+	\
+	php --version; \
 	\
 # https://github.com/docker-library/php/issues/443
-	&& pecl update-channels \
-	&& rm -rf /tmp/pear ~/.pearrc
+	pecl update-channels; \
+	rm -rf /tmp/pear ~/.pearrc
 
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 

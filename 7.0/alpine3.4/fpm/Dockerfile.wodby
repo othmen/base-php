@@ -17,7 +17,6 @@ ENV PHPIZE_DEPS \
 		gcc \
 		libc-dev \
 		make \
-		pcre-dev \
 		pkgconf \
 		re2c
 RUN apk add --no-cache --virtual .persistent-deps \
@@ -56,9 +55,9 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
 ENV GPG_KEYS 1A4E8B7277C42E53DBA9C7B9BCAA30EA9C0D5763 6E4F6AB321FDC07F2C332E3AC2BF0BC433CFC8B3
 
-ENV PHP_VERSION 7.0.26
-ENV PHP_URL="https://secure.php.net/get/php-7.0.26.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.0.26.tar.xz.asc/from/this/mirror"
-ENV PHP_SHA256="ed5cbb4bbb0ddef8985f100bba2e94002ad22a230b5da2dccfe148915df5f199" PHP_MD5=""
+ENV PHP_VERSION 7.0.27
+ENV PHP_URL="https://secure.php.net/get/php-7.0.27.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.0.27.tar.xz.asc/from/this/mirror"
+ENV PHP_SHA256="4b2bc823e806dbf7b62fe0b92b0d14b0c6e03f88c3fc5d96278416c54ce11f6c" PHP_MD5=""
 
 RUN set -xe; \
 	\
@@ -108,7 +107,6 @@ RUN set -xe \
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
 	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
-	&& if [[ $PHP_DEBUG == 1 ]]; then php_debug_args="--enable-debug"; fi \
 	&& ./configure \
 		--build="$gnuArch" \
 		--with-config-file-path="$PHP_INI_DIR" \
@@ -128,13 +126,12 @@ RUN set -xe \
 		--with-openssl \
 		--with-zlib \
 		\
-# bundled pcre is too old for s390x (which isn't exactly a good sign)
-# /usr/src/php/ext/pcre/pcrelib/pcre_jit_compile.c:65:2: error: #error Unsupported architecture
-		--with-pcre-regex=/usr \
+# bundled pcre does not support JIT on s390x
+# https://manpages.debian.org/stretch/libpcre3-dev/pcrejit.3.en.html#AVAILABILITY_OF_JIT_SUPPORT
+		$(test "$gnuArch" = 's390x-linux-gnu' && echo '--without-pcre-jit') \
+		$(test "${PHP_DEBUG}" = 1 && echo '--enable-debug') \
 		\
 		$PHP_EXTRA_CONFIGURE_ARGS \
-		\
-        $php_debug_args \
 	&& make -j "$(nproc)" \
 	&& make install \
 	&& if [[ $PHP_DEBUG != 1 ]]; then \
@@ -197,7 +194,7 @@ RUN set -ex \
 		echo 'daemonize = no'; \
 		echo; \
 		echo '[www]'; \
-		echo 'listen = [::]:9000'; \
+		echo 'listen = 9000'; \
 	} | tee php-fpm.d/zz-docker.conf
 
 EXPOSE 9000
