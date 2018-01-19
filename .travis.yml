@@ -17,7 +17,7 @@ env:
     - PHP_VER=5.6.33 ALPINE=3.6 TAG="${PHP_VER}-debug" PHP_DEBUG=1
 
 script:
-  - cd "${PHP_VER:0:3}/"alpine${ALPINE}"/fpm
+  - cd "${PHP_VER:0:3}/alpine${ALPINE}/fpm"
   - travis_retry make
 
 after_success: |
