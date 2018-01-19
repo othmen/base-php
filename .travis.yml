@@ -5,19 +5,19 @@ services:
 
 env:
   global:
-    - LATEST_VERSION=7.1
+    - LATEST_TAG=7.2.1
   matrix:
-    - VERSION=7.2 PHP_DEBUG=0 DIR=./7.2/alpine3.7/fpm
-    - VERSION=7.1 PHP_DEBUG=0 DIR=./7.1/alpine3.4/fpm
-    - VERSION=7.0 PHP_DEBUG=0 DIR=./7.0/alpine3.4/fpm
-    - VERSION=5.6 PHP_DEBUG=0 DIR=./5.6/alpine3.4/fpm
-    - VERSION=7.2 PHP_DEBUG=1 DIR=./7.2/alpine3.7/fpm
-    - VERSION=7.1 PHP_DEBUG=1 DIR=./7.1/alpine3.4/fpm
-    - VERSION=7.0 PHP_DEBUG=1 DIR=./7.0/alpine3.4/fpm
-    - VERSION=5.6 PHP_DEBUG=1 DIR=./5.6/alpine3.4/fpm
+    - PHP_VER=7.2.1  ALPINE=3.7 TAG="${PHP_VER}"
+    - PHP_VER=7.2.1  ALPINE=3.7 TAG="${PHP_VER}-debug" PHP_DEBUG=1
+    - PHP_VER=7.1.13 ALPINE=3.6 TAG="${PHP_VER}"
+    - PHP_VER=7.1.13 ALPINE=3.6 TAG="${PHP_VER}-debug" PHP_DEBUG=1
+    - PHP_VER=7.0.27 ALPINE=3.6 TAG="${PHP_VER}"
+    - PHP_VER=7.0.27 ALPINE=3.6 TAG="${PHP_VER}-debug" PHP_DEBUG=1
+    - PHP_VER=5.6.33 ALPINE=3.6 TAG="${PHP_VER}"
+    - PHP_VER=5.6.33 ALPINE=3.6 TAG="${PHP_VER}-debug" PHP_DEBUG=1
 
 script:
-  - cd "${DIR}"
+  - cd "${PHP_VER:0:3}/"alpine${ALPINE}"/fpm
   - travis_retry make
 
 after_success: |
@@ -25,7 +25,7 @@ after_success: |
     docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
     make release
 
-    if [[ "${VERSION}" == "${LATEST_VERSION}" && "${PHP_DEBUG}" != 1 ]]; then
+    if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
       make release TAG="latest"
     fi
   fi

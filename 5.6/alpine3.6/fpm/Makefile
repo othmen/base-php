@@ -1,14 +1,17 @@
 -include env_make
 
-TAG ?= 5.6.32
-PHP_DEBUG ?= 0
+PHP_VER ?= 5.6.33
 
 REPO = wodby/base-php
-NAME = base-php-5.6.32
+NAME = base-php-$(PHP_VER)
 
-ifeq ($(PHP_DEBUG), 1)
-    override TAG := $(TAG)-debug
-    NAME := $(NAME)-debug
+ifeq ($(TAG),)
+    ifeq ($(PHP_DEBUG),)
+        TAG := $(PHP_VER)
+    else
+        TAG := $(PHP_VER)-debug
+        NAME := $(NAME)-debug
+    endif
 endif
 
 .PHONY: build test push shell run start stop logs clean release
