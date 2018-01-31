@@ -6,7 +6,7 @@ services:
 env:
   global:
     - LATEST_TAG=7.2.1
-    - BASE_IMAGE_STABILITY_TAG=1.1.1
+    - BASE_IMAGE_STABILITY_TAG=1.1.2
   matrix:
     - PHP_VER=7.2.1  ALPINE_VER=3.7 TAG="${PHP_VER}"
     - PHP_VER=7.2.1  ALPINE_VER=3.7 TAG="${PHP_VER}-debug" PHP_DEBUG=1
