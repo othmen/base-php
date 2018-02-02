@@ -26,11 +26,11 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 
 | Supported tags and respective `Dockerfile` links | PHP    | Alpine |
 | ------------------------------------------------ | ------ | ------ |
-| `7.2.1`, `latest` [_(Dockerfile 7.2)_]           | 7.2.1  | 3.7    |
-| `7.1.13` [_(Dockerfile 7.1)_]                    | 7.1.13 | 3.7    |
+| `7.2.2`, `latest` [_(Dockerfile 7.2)_]           | 7.2.2  | 3.7    |
+| `7.1.14` [_(Dockerfile 7.1)_]                    | 7.1.14 | 3.7    |
 | `7.0.27` [_(Dockerfile 7.0)_]                    | 7.0.27 | 3.7    |
 | `5.6.33` [_(Dockerfile 5.6)_]                    | 5.6.33 | 3.7    |
-| `7.2.1-debug` [_(Dockerfile 7.2)_]               | 7.2.1  | 3.7    |
-| `7.1.13-debug` [_(Dockerfile 7.1)_]              | 7.1.13 | 3.7    |
+| `7.2.2-debug` [_(Dockerfile 7.2)_]               | 7.2.2  | 3.7    |
+| `7.1.14-debug` [_(Dockerfile 7.1)_]              | 7.1.14 | 3.7    |
 | `7.0.27-debug` [_(Dockerfile 7.0)_]              | 7.0.27 | 3.7    |
 | `5.6.33-debug` [_(Dockerfile 5.6)_]              | 5.6.33 | 3.7    |
