@@ -25,23 +25,11 @@ env:
     - PHP_VER="${PHP53}" ALPINE_VER=3.4 TAG="${PHP_VER}-debug" PHP_DEBUG=1
 
 script:
-  - |
-    cd "${PHP_VER:0:3}/alpine${ALPINE_VER}/fpm"
-    travis_retry make
+  - cd "${PHP_VER:0:3}/alpine${ALPINE_VER}/fpm"
+  - travis_retry make
 
-    if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
-      docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
-
-      make release
-
-      if [[ -n "${EXTRA_TAG}" ]]; then
-        make release TAG="${EXTRA_TAG}"
-      fi
-
-      if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
-        make release TAG="latest"
-      fi
-    fi
+after_success:
+  - travis-release.sh
 
 notifications:
   on_failure: never
