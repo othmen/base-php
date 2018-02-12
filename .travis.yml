@@ -29,6 +29,7 @@ script:
   - travis_retry make
 
 after_success:
+  - ls -la
   - ./travis-release.sh
 
 notifications:
