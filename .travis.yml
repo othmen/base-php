@@ -29,7 +29,7 @@ script:
   - travis_retry make
 
 after_success:
-  - travis-release.sh
+  - ./travis-release.sh
 
 notifications:
   on_failure: never
