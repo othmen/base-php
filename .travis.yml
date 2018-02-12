@@ -26,7 +26,7 @@ env:
 
 script:
   - cd "${PHP_VER:0:3}/alpine${ALPINE_VER}/fpm"
-  - travis_retry make
+#  - travis_retry make
 
 after_success:
   - ls -la
