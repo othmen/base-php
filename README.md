@@ -35,4 +35,3 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 | `7.1.14-debug` [_(Dockerfile 7.1)_]              | 7.1.14 | 3.6    |
 | `7.0.27-debug` [_(Dockerfile 7.0)_]              | 7.0.27 | 3.6    |
 | `5-debug`, `5.6.33-debug` [_(Dockerfile 5.6)_]   | 5.6.33 | 3.6    |
-| `5.3.29-debug` [_(Dockerfile 5.3)_]              | 5.3.29 | 3.4    |

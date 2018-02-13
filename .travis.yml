@@ -22,7 +22,6 @@ env:
     - PHP_VER="${PHP71}" ALPINE_VER=3.6 TAG="${PHP_VER}-debug" PHP_DEBUG=1
     - PHP_VER="${PHP70}" ALPINE_VER=3.6 TAG="${PHP_VER}-debug" PHP_DEBUG=1
     - PHP_VER="${PHP56}" ALPINE_VER=3.6 TAG="${PHP_VER}-debug" PHP_DEBUG=1 EXTRA_TAG=5-debug
-    - PHP_VER="${PHP53}" ALPINE_VER=3.4 TAG="${PHP_VER}-debug" PHP_DEBUG=1
 
 script:
   - cd "${PHP_VER:0:3}/alpine${ALPINE_VER}/fpm"
