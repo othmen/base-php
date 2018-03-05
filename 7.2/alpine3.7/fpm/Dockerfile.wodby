@@ -4,7 +4,11 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM alpine:3.7
+ARG BASE_IMAGE_TAG
+
+FROM wodby/alpine:${BASE_IMAGE_TAG}
+
+ARG PHP_DEBUG
 
 # persistent / runtime deps
 ENV PHPIZE_DEPS \
