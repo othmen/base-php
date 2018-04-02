@@ -15,7 +15,8 @@ RUN set -eux; \
 		echo 'Pin-Priority: -1'; \
 	} > /etc/apt/preferences.d/no-debian-php
 
-# persistent / runtime deps
+# dependencies required for running "phpize"
+# (see persistent deps below)
 ENV PHPIZE_DEPS \
 		autoconf \
 		dpkg-dev \
@@ -26,6 +27,8 @@ ENV PHPIZE_DEPS \
 		make \
 		pkg-config \
 		re2c
+
+# persistent / runtime deps
 RUN apt-get update && apt-get install -y \
 		$PHPIZE_DEPS \
 		ca-certificates \
@@ -52,9 +55,9 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
 ENV GPG_KEYS A917B1ECDA84AEC2B568FED6F50ABC807BD5DCD0 528995BFEDFBA7191D46839EF9BA0ADA31CBD89E 1729F83938DA44E27BA0F4D3DBDB397470D12172
 
-ENV PHP_VERSION 7.1.15
-ENV PHP_URL="https://secure.php.net/get/php-7.1.15.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.1.15.tar.xz.asc/from/this/mirror"
-ENV PHP_SHA256="0e17192fb43532e4ebaa190ecec9c7e59deea7dadb7dab67b19c2081a68bd817" PHP_MD5=""
+ENV PHP_VERSION 7.1.16
+ENV PHP_URL="https://secure.php.net/get/php-7.1.16.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-7.1.16.tar.xz.asc/from/this/mirror"
+ENV PHP_SHA256="a5d67e477248a3911af7ef85c8400c1ba8cd632184186fd31070b96714e669f1" PHP_MD5=""
 
 RUN set -xe; \
 	\

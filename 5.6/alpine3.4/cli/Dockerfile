@@ -6,7 +6,8 @@
 
 FROM alpine:3.4
 
-# persistent / runtime deps
+# dependencies required for running "phpize"
+# these get automatically installed and removed by "docker-php-ext-*" (unless they're already installed)
 ENV PHPIZE_DEPS \
 		autoconf \
 		dpkg-dev dpkg \
@@ -17,6 +18,8 @@ ENV PHPIZE_DEPS \
 		make \
 		pkgconf \
 		re2c
+
+# persistent / runtime deps
 RUN apk add --no-cache --virtual .persistent-deps \
 		ca-certificates \
 		curl \
@@ -52,9 +55,9 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
 ENV GPG_KEYS 0BD78B5F97500D450838F95DFE857D9A90D90EC1 6E4F6AB321FDC07F2C332E3AC2BF0BC433CFC8B3
 
-ENV PHP_VERSION 5.6.34
-ENV PHP_URL="https://secure.php.net/get/php-5.6.34.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-5.6.34.tar.xz.asc/from/this/mirror"
-ENV PHP_SHA256="21453be3a045204cd2717543ef42771324f411f40962ecda4fe841930a933128" PHP_MD5=""
+ENV PHP_VERSION 5.6.35
+ENV PHP_URL="https://secure.php.net/get/php-5.6.35.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-5.6.35.tar.xz.asc/from/this/mirror"
+ENV PHP_SHA256="9985cb64cb8224c289effff5b34f670d14f838175f76daea0507d643eec650d2" PHP_MD5=""
 
 RUN set -xe; \
 	\
