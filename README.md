@@ -8,8 +8,9 @@
 This repository is a fork of https://github.com/docker-library/php with a few changes:
 
 * We build only Alpine FPM variants
-* Built with libressl instead of openssl
+* Built with LibreSSL instead of OpenSSL
 * Additional debug variants of images with --enable-debug and non-stripped bins
+* Legacy PHP 5.3 variant
 
 ## Docker Images
 
@@ -26,12 +27,16 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 
 | Supported tags and respective `Dockerfile` links | PHP    | Alpine |
 | ------------------------------------------------ | ------ | ------ |
-| `7`, `7.2.2`, `latest` [_(Dockerfile 7.2)_]      | 7.2.2  | 3.7    |
-| `7.1.14` [_(Dockerfile 7.1)_]                    | 7.1.14 | 3.7    |
-| `7.0.27` [_(Dockerfile 7.0)_]                    | 7.0.27 | 3.7    |
-| `5`, `5.6.33` [_(Dockerfile 5.6)_]               | 5.6.33 | 3.7    |
+| `7`, `7.2.2`, `latest` [_(Dockerfile 7.2)_]      | 7.2.5  | 3.7    |
+| `7.1.14` [_(Dockerfile 7.1)_]                    | 7.1.17 | 3.7    |
+| `7.0.27` [_(Dockerfile 7.0)_]                    | 7.0.30 | 3.7    |
+| `5`, `5.6.33` [_(Dockerfile 5.6)_]               | 5.6.36 | 3.7    |
 | `5.3.29` [_(Dockerfile 5.3)_]                    | 5.3.29 | 3.4    |
-| `7-debug`, `7.2.2-debug` [_(Dockerfile 7.2)_]    | 7.2.2  | 3.7    |
-| `7.1.14-debug` [_(Dockerfile 7.1)_]              | 7.1.14 | 3.7    |
-| `7.0.27-debug` [_(Dockerfile 7.0)_]              | 7.0.27 | 3.7    |
-| `5-debug`, `5.6.33-debug` [_(Dockerfile 5.6)_]   | 5.6.33 | 3.7    |
+| `7-debug`, `7.2.2-debug` [_(Dockerfile 7.2)_]    | 7.2.5  | 3.7    |
+| `7.1.14-debug` [_(Dockerfile 7.1)_]              | 7.1.17 | 3.7    |
+| `7.0.27-debug` [_(Dockerfile 7.0)_]              | 7.0.30 | 3.7    |
+| `5-debug`, `5.6.33-debug` [_(Dockerfile 5.6)_]   | 5.6.36 | 3.7    |
+
+## Image with more PHP extensions and orchestration actions
+
+See https://github.com/wodby/php

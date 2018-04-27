@@ -6,26 +6,21 @@ services:
 env:
   global:
     - BASE_IMAGE_STABILITY_TAG=2.0.0
-    - PHP72=7.2.4
-    - PHP71=7.1.16
-    - PHP70=7.0.29
-    - PHP56=5.6.35
-    - PHP53=5.3.29
     - LATEST_TAG="${PHP72}"
   matrix:
-    - PHP_VER="${PHP72}" ALPINE_VER=3.7 TAG="${PHP_VER}" EXTRA_TAG=7
-    - PHP_VER="${PHP71}" ALPINE_VER=3.7 TAG="${PHP_VER}"
-    - PHP_VER="${PHP70}" ALPINE_VER=3.7 TAG="${PHP_VER}"
-    - PHP_VER="${PHP56}" ALPINE_VER=3.7 TAG="${PHP_VER}" EXTRA_TAG=5
-    - PHP_VER="${PHP53}" ALPINE_VER=3.4 TAG="${PHP_VER}"
-    - PHP_VER="${PHP72}" ALPINE_VER=3.7 TAG="${PHP_VER}-debug" PHP_DEBUG=1 EXTRA_TAG=7-debug
-    - PHP_VER="${PHP71}" ALPINE_VER=3.7 TAG="${PHP_VER}-debug" PHP_DEBUG=1
-    - PHP_VER="${PHP70}" ALPINE_VER=3.7 TAG="${PHP_VER}-debug" PHP_DEBUG=1
-    - PHP_VER="${PHP56}" ALPINE_VER=3.7 TAG="${PHP_VER}-debug" PHP_DEBUG=1 EXTRA_TAG=5-debug
+    - VARIANT=7.2/alpine3.7/fpm EXTRA_TAG=7
+    - VARIANT=7.1/alpine3.7/fpm
+    - VARIANT=7.0/alpine3.7/fpm
+    - VARIANT=5.6/alpine3.7/fpm EXTRA_TAG=5
+    - VARIANT=5.3/alpine3.4/fpm
+    - VARIANT=7.2/alpine3.7/fpm PHP_DEBUG=1 EXTRA_TAG=7-debug
+    - VARIANT=7.1/alpine3.7/fpm PHP_DEBUG=1
+    - VARIANT=7.0/alpine3.7/fpm PHP_DEBUG=1
+    - VARIANT=5.6/alpine3.7/fpm PHP_DEBUG=1 EXTRA_TAG=5-debug
 
 script:
-  - cd "${PHP_VER:0:3}/alpine${ALPINE_VER}/fpm"
+  - cd "${VARIANT}"
   - travis_retry make
 
 after_success:
-  - . "${TRAVIS_BUILD_DIR}/travis-release.sh"
+  - . "${TRAVIS_BUILD_DIR}/release.sh"
