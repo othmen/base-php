@@ -3,22 +3,19 @@
 set -e
 
 if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
-  docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
-  if [[ -n "${TRAVIS_TAG}" ]]; then
-    export STABILITY_TAG="${TRAVIS_TAG}"
-  fi
+    if [[ -n "${TRAVIS_TAG}" ]]; then
+        export STABILITY_TAG="${TRAVIS_TAG}"
+    fi
 
-  make release
+    IFS=',' read -ra tags <<< "${TAGS}"
 
-  if [[ -n "${EXTRA_TAGS}" ]]; then
-    IFS=','
-    for tag in "${EXTRA_TAGS}";
-        do make release TAG="${tag}";
+    for tag in "${tags[@]}"; do
+        if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+            make release TAG="latest";
+        else
+            make release TAG="${tag}";
+        fi
     done
-  fi
-
-  if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
-    make release TAG="latest"
-  fi
 fi
