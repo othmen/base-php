@@ -11,8 +11,11 @@ if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  ||
 
   make release
 
-  if [[ -n "${EXTRA_TAG}" ]]; then
-    make release TAG="${EXTRA_TAG}"
+  if [[ -n "${EXTRA_TAGS}" ]]; then
+    IFS=','
+    for tag in "${EXTRA_TAGS}";
+        do make release TAG="${tag}";
+    done
   fi
 
   if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
