@@ -112,7 +112,13 @@ RUN set -xe \
 		--with-config-file-path="$PHP_INI_DIR" \
 		--with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
 		\
+# make sure invalid --configure-flags are fatal errors intead of just warnings
+		--enable-option-checking=fatal \
+		\
 		--disable-cgi \
+		\
+# https://github.com/docker-library/php/issues/439
+		--with-mhash \
 		\
 # --enable-ftp is included here because ftp_ssl_connect() needs ftp to be compiled statically (see https://github.com/docker-library/php/issues/236)
 		--enable-ftp \
