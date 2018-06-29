@@ -8,6 +8,8 @@ ARG BASE_IMAGE_TAG
 
 FROM wodby/alpine:${BASE_IMAGE_TAG}
 
+ARG PHP_DEBUG
+
 # dependencies required for running "phpize"
 # these get automatically installed and removed by "docker-php-ext-*" (unless they're already installed)
 ENV PHPIZE_DEPS \
