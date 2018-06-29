@@ -92,6 +92,7 @@ RUN set -xe; \
 			gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
 		done; \
 		gpg --batch --verify php.tar.xz.asc php.tar.xz; \
+		command -v gpgconf > /dev/null && gpgconf --kill all; \
 		rm -rf "$GNUPGHOME"; \
 	fi; \
 	\
@@ -134,8 +135,6 @@ RUN set -eux; \
 		\
 # make sure invalid --configure-flags are fatal errors intead of just warnings
 		--enable-option-checking=fatal \
-		\
-		--disable-cgi \
 		\
 # https://github.com/docker-library/php/issues/439
 		--with-mhash \
