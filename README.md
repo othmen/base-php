@@ -27,13 +27,13 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 
 Supported tags and respective `Dockerfile` links:
 
-* `7.2.5`, `7.2`, `7`, `latest` [_(Dockerfile 7.2)_]
-* `7.1.17`, `7.1` [_(Dockerfile 7.1)_]
+* `7.2.7`, `7.2`, `7`, `latest` [_(Dockerfile 7.2)_]
+* `7.1.19`, `7.1` [_(Dockerfile 7.1)_]
 * `7.0.30`, `7.0` [_(Dockerfile 7.0)_]
 * `5.6.36`, `5.6`, `5` [_(Dockerfile 5.6)_]
 * `5.3.29`, `5.3` [_(Dockerfile 5.3)_]
-* `7.2.5-debug`, `7.2-debug`, `7-debug` [_(Dockerfile 7.2)_]
-* `7.1.17-debug`, `7.1-debug` [_(Dockerfile 7.1)_]
+* `7.2.7-debug`, `7.2-debug`, `7-debug` [_(Dockerfile 7.2)_]
+* `7.1.19-debug`, `7.1-debug` [_(Dockerfile 7.1)_]
 * `7.0.30-debug`, `7.0-debug` [_(Dockerfile 7.0)_]
 * `5.6.33-debug`, `5.6-debug`, `5-debug` [_(Dockerfile 5.6)_]
 
