@@ -34,3 +34,6 @@ sed -i '/fullVersion=/a\\n    sed -i -E "s/\\`$majorVersion\.$minorVersion\.[0-9
 mv tmp update.wodby.sh
 
 ./update.wodby.sh
+
+rm Dockerfile-alpine.wodby.template
+rm update.wodby.sh
