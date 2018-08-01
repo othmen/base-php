@@ -23,7 +23,7 @@ sed -i '/versions=( "${versions\[@\]%\/}" )/a\versions=( "${versions[@]:1}" )' t
 sed -i 's/Dockerfile-alpine.template/Dockerfile-alpine.wodby.template/' tmp
 sed -i -E 's/stretch jessie alpine.+?\;/alpine3.7;/' tmp
 sed -i 's/cli apache fpm zts/fpm/' tmp
-sed -i 's/$variant\/Dockerfile"/$variant\/Dockerfile.wodby"/' tmp
+sed -i 's/\/Dockerfile"/\/Dockerfile.wodby"/' tmp
 # Change .travis.yml modifications.
 sed -i -E 's/^(echo "\$travis.*)/#\1/' tmp
 sed -i '/fullVersion=/a\    sed -i -E "s/(PHP$majorVersion$minorVersion)=.*/\\1=$fullVersion/" .travis.yml\n' tmp
