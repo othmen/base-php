@@ -30,12 +30,13 @@ for target in "${delete[@]}"; do \
 done' tmp
 # Use our template for fmp alpine variants.
 sed -i 's/Dockerfile-alpine.template/Dockerfile-alpine.wodby.template/' tmp
-sed -i -E 's/stretch jessie alpine.+?\;/alpine3.8;/' tmp
-sed -i 's/cli apache fpm zts/fpm/' tmp
+sed -i 's|\[ -d "$version/$suite/$variant" \]|\[ -f "$version/$suite/$variant/Dockerfile.wodby" \]|' tmp
 sed -i 's/\/Dockerfile"/\/Dockerfile.wodby"/' tmp
 # Change .travis.yml modifications.
 sed -i -E 's/^(echo "\$travis.*)/#\1/' tmp
 sed -i '/fullVersion=/a\    sed -i -E "s/(PHP$majorVersion$minorVersion)=.*/\\1=$fullVersion/" .travis.yml\n' tmp
+# Update Makefile.
+sed -i '/gawk/i\            sed -i -E "s/(PHP_VER \\?= ).+/\\1$fullVersion/" "$version/$suite/$variant/Makefile"' tmp
 # Update README.
 sed -i '/fullVersion=/a\    sed -i -E "s/\\`$majorVersion\.$minorVersion\.[0-9]+\\`/\\`$fullVersion\\`/" README.md' tmp
 sed -i '/fullVersion=/a\\n    sed -i -E "s/\\`$majorVersion\.$minorVersion\.[0-9]+-debug\\`/\\`$fullVersion-debug\\`/" README.md' tmp
