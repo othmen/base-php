@@ -30,7 +30,7 @@ for target in "${delete[@]}"; do \
 done' tmp
 # Use our template for fmp alpine variants.
 sed -i 's/Dockerfile-alpine.template/Dockerfile-alpine.wodby.template/' tmp
-sed -i -E 's/stretch jessie alpine.+?\;/alpine3.7;/' tmp
+sed -i -E 's/stretch jessie alpine.+?\;/alpine3.8;/' tmp
 sed -i 's/cli apache fpm zts/fpm/' tmp
 sed -i 's/\/Dockerfile"/\/Dockerfile.wodby"/' tmp
 # Change .travis.yml modifications.
