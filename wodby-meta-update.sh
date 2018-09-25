@@ -20,7 +20,7 @@ cp update.sh tmp
 
 # Exclude 7.3-rc, 5.3
 sed -i '/versions=( "${versions\[@\]%\/}" )/a\
-delete=(5.3 7.3-rc) \
+delete=(5.3 7.0 7.3-rc) \
 for target in "${delete[@]}"; do \
   for i in "${!versions[@]}"; do \
     if [[ ${versions[i]} = "${target}" ]]; then \

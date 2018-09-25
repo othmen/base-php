@@ -10,7 +10,6 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 * Base image set to [wodby/alpine](https://github.com/wodby/alpine) with stability tags
 * We build only Alpine-based FPM variants
 * Additional debug variants of images with `--enable-debug` and non-stripped bins
-* Legacy PHP 5.3 variant
 
 ## Docker Images
 
@@ -19,17 +18,14 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 * [Travis CI builds](https://travis-ci.org/wodby/base-php) 
 * [Docker Hub](https://hub.docker.com/r/wodby/base-php)
 
-| Supported tags and respective `Dockerfile` links                                | Alpine version |
-| ------------------------------------------------------------------------------- | -------------- |
-| `7.2.10`, `7.2`, `7`, `latest` [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_]         | 3.8            |
-| `7.1.22`, `7.1` [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]                        | 3.8            |
-| `7.0.32`, `7.0` [_(7.0/alpine3.7/fpm/Dockerfile.wodby)_]                        | 3.7            |
-| `5.6.38`, `5.6`, `5` [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_]                   | 3.8            |
-| `5.3.29`, `5.3` [_(5.3/alpine3.4/fpm/Dockerfile.wodby)_]                        | 3.4            |
-| `7.2.10-debug`, `7.2-debug`, `7-debug` [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_] | 3.8            |
-| `7.1.22-debug`, `7.1-debug` [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]            | 3.8            |
-| `7.0.32-debug`, `7.0-debug` [_(7.0/alpine3.7/fpm/Dockerfile.wodby)_]            | 3.7            |
-| `5.6.38-debug`, `5.6-debug`, `5-debug` [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_] | 3.8            |
+Supported tags and respective `Dockerfile` links
+
+* `7.2.10`, `7.2`, `7`, `latest` [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.1.22`, `7.1` [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]
+* `5.6.38`, `5.6`, `5` [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.2.10-debug`, `7.2-debug`, `7-debug` [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.1.22-debug`, `7.1-debug` [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]
+* `5.6.38-debug`, `5.6-debug`, `5-debug` [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_]
 
 ## Configurable image with pre-compiled extensions
 
@@ -37,6 +33,5 @@ For actual development and production usage see descendant image [wodby/php](htt
 
 [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.2/alpine3.8/fpm/Dockerfile.wodby
 [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.1/alpine3.8/fpm/Dockerfile.wodby
-[_(7.0/alpine3.7/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.0/alpine3.7/fpm/Dockerfile.wodby
 [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/5.6/alpine3.8/fpm/Dockerfile.wodby
 [_(5.3/alpine3.4/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/5.3/alpine3.4/fpm/Dockerfile.wodby
