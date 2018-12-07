@@ -18,9 +18,9 @@ sed -i '/\$PHP_EXTRA_CONFIGURE_ARGS/i\        $(test "${PHP_DEBUG}" = 1 && echo 
 mv tmp Dockerfile-alpine.wodby.template
 cp update.sh tmp
 
-# Exclude 7.3-rc, 5.3
+# Exclude 7.0
 sed -i '/versions=( "${versions\[@\]%\/}" )/a\
-delete=(5.3 7.0 7.3-rc) \
+delete=(7.0) \
 for target in "${delete[@]}"; do \
   for i in "${!versions[@]}"; do \
     if [[ ${versions[i]} = "${target}" ]]; then \
