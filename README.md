@@ -20,14 +20,14 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 
 Supported tags and respective `Dockerfile` links
 
-* `7.3.0`, `7.3`, `7`, `latest` [_(7.3/alpine3.8/fpm/Dockerfile.wodby)_]
-* `7.2.13`, `7.2` [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_]
-* `7.1.25`, `7.1` [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]
-* `5.6.39`, `5.6`, `5` [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_]
-* `7.3.0-debug`, `7.3-debug`, `7-debug` [_(7.3/alpine3.8/fpm/Dockerfile.wodby)_]
-* `7.2.13-debug`, `7.2-debug`, `7-debug` [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_]
-* `7.1.25-debug`, `7.1-debug` [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]
-* `5.6.39-debug`, `5.6-debug`, `5-debug` [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.3.1`, `7.3`, `7`, `latest` [_(7.3/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.2.14`, `7.2` [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.1.26`, `7.1` [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]
+* `5.6.40`, `5.6`, `5` [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.3.1-debug`, `7.3-debug`, `7-debug` [_(7.3/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.2.14-debug`, `7.2-debug`, `7-debug` [_(7.2/alpine3.8/fpm/Dockerfile.wodby)_]
+* `7.1.26-debug`, `7.1-debug` [_(7.1/alpine3.8/fpm/Dockerfile.wodby)_]
+* `5.6.40-debug`, `5.6-debug`, `5-debug` [_(5.6/alpine3.8/fpm/Dockerfile.wodby)_]
 
 ## Configurable image with pre-compiled extensions
 
