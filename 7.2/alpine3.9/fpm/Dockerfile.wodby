@@ -156,6 +156,7 @@ RUN set -xe \
         $(test "${PHP_DEBUG}" = 1 && echo '--enable-debug') \
 		$PHP_EXTRA_CONFIGURE_ARGS \
 	&& make -j "$(nproc)" \
+	&& find -type f -name '*.a' -delete \
 	&& make install \
     && if [[ $PHP_DEBUG != 1 ]]; then \
 	 { find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; } \
