@@ -4,9 +4,9 @@ services: docker
 env:
   global:
     - BASE_IMAGE_STABILITY_TAG=2.2.0
-    - PHP73=7.3.2
-    - PHP72=7.2.15
-    - PHP71=7.1.26
+    - PHP73=7.3.3
+    - PHP72=7.2.16
+    - PHP71=7.1.27
   matrix:
     - PHP_VER="${PHP73}" ALPINE_VER=3.9 TAGS="${PHP_VER},7.3,7,latest"
     - PHP_VER="${PHP72}" ALPINE_VER=3.9 TAGS="${PHP_VER},7.2,7"
