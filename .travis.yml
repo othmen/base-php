@@ -3,7 +3,7 @@ services: docker
 
 env:
   global:
-  - BASE_IMAGE_STABILITY_TAG=2.2.2
+  - BASE_IMAGE_STABILITY_TAG=2.2.3
   - PHP73=7.3.5
   - PHP72=7.2.18
   - PHP71=7.1.29
