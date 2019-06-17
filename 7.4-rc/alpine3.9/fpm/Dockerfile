@@ -60,11 +60,11 @@ ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
-ENV GPG_KEYS 1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC9FF8D3EE5AF27F
+ENV GPG_KEYS 42670A7FE4D0441C8E4632349E4FDC074A4EF02D 5A52880781F755608BF815FC910DEB46F53EA312
 
-ENV PHP_VERSION 7.2.19
-ENV PHP_URL="https://www.php.net/get/php-7.2.19.tar.xz/from/this/mirror" PHP_ASC_URL="https://www.php.net/get/php-7.2.19.tar.xz.asc/from/this/mirror"
-ENV PHP_SHA256="4ffa2404a88d60e993a9fe69f829ebec3eb1e006de41b6048ce5e91bbeaa9282" PHP_MD5=""
+ENV PHP_VERSION 7.4.0alpha1
+ENV PHP_URL="https://downloads.php.net/~derick/php-7.4.0alpha1.tar.xz" PHP_ASC_URL="https://downloads.php.net/~derick/php-7.4.0alpha1.tar.xz.asc"
+ENV PHP_SHA256="378400b6eced6e358f5db750413a7f9959517b0daef6580b16d640190b7dc364" PHP_MD5=""
 
 RUN set -xe; \
 	\
@@ -109,12 +109,16 @@ RUN set -xe \
 		libedit-dev \
 		libsodium-dev \
 		libxml2-dev \
+		oniguruma-dev \
 		openssl-dev \
 		sqlite-dev \
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
 		LDFLAGS="$PHP_LDFLAGS" \
+		# fix ARGON2 detection for 7.4-alpha1 https://github.com/docker-library/php/pull/840#pullrequestreview-249660894
+		ARGON2_LIBS="-largon2" \
+		ARGON2_CFLAGS="-I/usr/include" \
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
 	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
@@ -172,9 +176,6 @@ RUN set -xe \
 	\
 	&& apk del --no-network .build-deps \
 	\
-# update pecl channel definitions https://github.com/docker-library/php/issues/443
-	&& pecl update-channels \
-	&& rm -rf /tmp/pear ~/.pearrc \
 # smoke test
 	&& php --version
 
@@ -205,6 +206,7 @@ RUN set -ex \
 	&& { \
 		echo '[global]'; \
 		echo 'error_log = /proc/self/fd/2'; \
+		echo; echo '; https://github.com/docker-library/php/pull/725#issuecomment-443540114'; echo 'log_limit = 8192'; \
 		echo; \
 		echo '[www]'; \
 		echo '; if we send this to /proc/self/fd/1, it never appears'; \
@@ -214,6 +216,7 @@ RUN set -ex \
 		echo; \
 		echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
 		echo 'catch_workers_output = yes'; \
+		echo 'decorate_workers_output = no'; \
 	} | tee php-fpm.d/docker.conf \
 	&& { \
 		echo '[global]'; \

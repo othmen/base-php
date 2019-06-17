@@ -3,6 +3,11 @@ set -Eeuo pipefail
 
 # https://www.php.net/gpg-keys.php
 declare -A gpgKeys=(
+	# https://wiki.php.net/todo/php74
+	# petk & derick
+	# https://www.php.net/gpg-keys.php#gpg-7.4
+	[7.4]='42670A7FE4D0441C8E4632349E4FDC074A4EF02D 5A52880781F755608BF815FC910DEB46F53EA312'
+
 	# https://wiki.php.net/todo/php73
 	# cmb & stas
 	# https://www.php.net/gpg-keys.php#gpg-7.3
@@ -118,7 +123,7 @@ for version in "${versions[@]}"; do
 
 	dockerfiles=()
 
-	for suite in stretch jessie alpine{3.9,3.8}; do
+	for suite in stretch alpine{3.10,3.9}; do
 		[ -d "$version/$suite" ] || continue
 		alpineVer="${suite#alpine}"
 
@@ -148,11 +153,24 @@ for version in "${versions[@]}"; do
 			if [ "$variant" = 'apache' ]; then
 				cp -a apache2-foreground "$version/$suite/$variant/"
 			fi
-			if [ "$majorVersion" = '7' -a "$minorVersion" -lt '2' ] || [ "$suite" = 'jessie' ]; then
-				# argon2 password hashing is only supported in 7.2+ and stretch+ / alpine 3.8+
+			if [ "$majorVersion" = '7' -a "$minorVersion" -lt '2' ]; then
+				# argon2 password hashing is only supported in 7.2+
 				sed -ri \
 					-e '/##<argon2>##/,/##<\/argon2>##/d' \
 					-e '/argon2/d' \
+					"$version/$suite/$variant/Dockerfile"
+			fi
+			if [ "$majorVersion" = '7' -a "$minorVersion" -lt '4' ]; then
+				# oniguruma is part of mbstring in php 7.4+
+				# ARGON2 is a hack only required for alpha1: https://github.com/docker-library/php/pull/840#pullrequestreview-249660894
+				sed -ri \
+					-e '/oniguruma-dev|libonig-dev/d' \
+					-e '/ARGON2/d' \
+					"$version/$suite/$variant/Dockerfile"
+			else
+				# 7.4 and above no longer include pecl/pear: https://github.com/php/php-src/pull/3781
+				sed -ri \
+					-e '\!pecl.*channel|/tmp/pear!d' \
 					"$version/$suite/$variant/Dockerfile"
 			fi
 			if [ "$majorVersion" = '7' -a "$minorVersion" -lt '2' ]; then
@@ -176,19 +194,12 @@ for version in "${versions[@]}"; do
 			mv "$version/$suite/$variant/Dockerfile.new" "$version/$suite/$variant/Dockerfile"
 
 			# automatic `-slim` for stretch
-			# TODO always add slim once jessie is removed
 			sed -ri \
-				-e 's!%%DEBIAN_TAG%%!'"${suite/stretch/stretch-slim}"'!' \
+				-e 's!%%DEBIAN_TAG%%!'"${suite}-slim"'!' \
 				-e 's!%%DEBIAN_SUITE%%!'"$suite"'!' \
 				-e 's!%%ALPINE_VERSION%%!'"$alpineVer"'!' \
 				"$version/$suite/$variant/Dockerfile"
 			dockerfiles+=( "$version/$suite/$variant/Dockerfile" )
-
-			if [ "$suite" = 'alpine3.8' ]; then
-				# Alpine 3.9+ uses OpenSSL, but 3.8 still uses LibreSSL
-				sed -ri -e 's!(\s)openssl!\1libressl!g' "$version/$suite/$variant/Dockerfile"
-				# (matching whitespace to avoid "--with-openssl" being replaced with the non-existent "--with-libressl" flag)
-			fi
 		done
 	done
 
