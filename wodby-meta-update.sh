@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 cp Dockerfile-alpine.template tmp
 
