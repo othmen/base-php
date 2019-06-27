@@ -1,7 +1,7 @@
 -include env_make
 
-PHP_VER ?= 7.2.19
-ALPINE_VER ?= 3.9
+PHP_VER ?= 7.3.6
+ALPINE_VER ?= 3.10
 
 REPO = wodby/base-php
 NAME = base-php-$(PHP_VER)

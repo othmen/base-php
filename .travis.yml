@@ -8,12 +8,12 @@ env:
   - PHP72=7.2.19
   - PHP71=7.1.30
   matrix:
-  - PHP_VER="${PHP73}" ALPINE_VER=3.9 TAGS="${PHP_VER},7.3,7,latest"
-  - PHP_VER="${PHP72}" ALPINE_VER=3.9 TAGS="${PHP_VER},7.2,7"
-  - PHP_VER="${PHP71}" ALPINE_VER=3.9 TAGS="${PHP_VER},7.1"
-  - PHP_VER="${PHP73}" ALPINE_VER=3.9 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.3-debug,7-debug"
-  - PHP_VER="${PHP72}" ALPINE_VER=3.9 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.2-debug"
-  - PHP_VER="${PHP71}" ALPINE_VER=3.9 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.1-debug"
+  - PHP_VER="${PHP73}" ALPINE_VER=3.10 TAGS="${PHP_VER},7.3,7,latest"
+  - PHP_VER="${PHP72}" ALPINE_VER=3.10 TAGS="${PHP_VER},7.2,7"
+  - PHP_VER="${PHP71}" ALPINE_VER=3.10 TAGS="${PHP_VER},7.1"
+  - PHP_VER="${PHP73}" ALPINE_VER=3.10 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.3-debug,7-debug"
+  - PHP_VER="${PHP72}" ALPINE_VER=3.10 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.2-debug"
+  - PHP_VER="${PHP71}" ALPINE_VER=3.10 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.1-debug"
 
 script:
 - cd "${PHP_VER:0:3}/alpine${ALPINE_VER}/fpm"
