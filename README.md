@@ -17,6 +17,7 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 * Base image: [wodby/alpine](https://github.com/wodby/alpine)
 * [Travis CI builds](https://travis-ci.org/wodby/base-php) 
 * [Docker Hub](https://hub.docker.com/r/wodby/base-php)
+* Alpine version: 3.10
 
 Supported tags and respective `Dockerfile` links
 
