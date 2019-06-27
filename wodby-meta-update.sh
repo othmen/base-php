@@ -11,7 +11,7 @@ sed -i 's/FROM alpine.*/FROM wodby\/alpine:${BASE_IMAGE_TAG}/' tmp
 
 # For -debug images.
 sed -i -E "s/\&\&(.+?-exec strip.+)/\1/" tmp
-sed -i '/exec strip/i\    && if [[ \$PHP_DEBUG != 1 ]]; then \\' tmp
+sed -i '/exec strip/i\    if [[ \$PHP_DEBUG != 1 ]]; then \\' tmp
 sed -i '/exec strip/a\    fi \\' tmp
 sed -i '/\$PHP_EXTRA_CONFIGURE_ARGS/i\        $(test "${PHP_DEBUG}" = 1 && echo '"'"'--enable-debug'"'"') \\' tmp
 
