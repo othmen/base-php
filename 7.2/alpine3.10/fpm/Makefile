@@ -1,6 +1,6 @@
 -include env_make
 
-PHP_VER ?= 7.2.22
+PHP_VER ?= 7.2.23
 ALPINE_VER ?= 3.10
 
 REPO = wodby/base-php
