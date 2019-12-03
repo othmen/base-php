@@ -7,16 +7,13 @@ env:
   - PHP74=7.4.0
   - PHP73=7.3.12
   - PHP72=7.2.25
-  - PHP71=7.1.33
   matrix:
   - PHP_VER="${PHP74}" ALPINE_VER=3.10 TAGS="${PHP_VER},7.4,7,latest"
   - PHP_VER="${PHP73}" ALPINE_VER=3.10 TAGS="${PHP_VER},7.3"
   - PHP_VER="${PHP72}" ALPINE_VER=3.10 TAGS="${PHP_VER},7.2"
-  - PHP_VER="${PHP71}" ALPINE_VER=3.10 TAGS="${PHP_VER},7.1"
   - PHP_VER="${PHP74}" ALPINE_VER=3.10 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.4-debug,7-debug"
   - PHP_VER="${PHP73}" ALPINE_VER=3.10 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.3-debug"
   - PHP_VER="${PHP72}" ALPINE_VER=3.10 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.2-debug"
-  - PHP_VER="${PHP71}" ALPINE_VER=3.10 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.1-debug"
 
 script:
 - cd "${PHP_VER:0:3}/alpine${ALPINE_VER}/fpm"

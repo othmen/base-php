@@ -24,11 +24,9 @@ Supported tags and respective `Dockerfile` links
 * `7.4.0`, `7.4`, `7`, `latest` [_(7.4/alpine3.10/fpm/Dockerfile.wodby)_]
 * `7.3.12`, `7.3` [_(7.2/alpine3.10/fpm/Dockerfile.wodby)_]
 * `7.2.25`, `7.2` [_(7.2/alpine3.10/fpm/Dockerfile.wodby)_]
-* `7.1.33`, `7.1` [_(7.1/alpine3.10/fpm/Dockerfile.wodby)_]
 * `7.4.0-debug`, `7.4-debug`, `7-debug` [_(7.4/alpine3.10/fpm/Dockerfile.wodby)_]
 * `7.3.12-debug`, `7.3-debug` [_(7.3/alpine3.10/fpm/Dockerfile.wodby)_]
 * `7.2.25-debug`, `7.2-debug` [_(7.2/alpine3.10/fpm/Dockerfile.wodby)_]
-* `7.1.33-debug`, `7.1-debug` [_(7.1/alpine3.10/fpm/Dockerfile.wodby)_]
 
 ## Configurable image with pre-compiled extensions
 
@@ -37,4 +35,3 @@ For actual development and production usage see descendant image [wodby/php](htt
 [_(7.4/alpine3.10/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.4/alpine3.10/fpm/Dockerfile.wodby
 [_(7.3/alpine3.10/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.3/alpine3.10/fpm/Dockerfile.wodby
 [_(7.2/alpine3.10/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.2/alpine3.10/fpm/Dockerfile.wodby
-[_(7.1/alpine3.10/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.1/alpine3.10/fpm/Dockerfile.wodby
