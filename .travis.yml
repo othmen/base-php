@@ -16,14 +16,10 @@ env:
   - PHP_VER="${PHP72}" ALPINE_VER=3.10 PHP_DEBUG=1 TAGS="${PHP_VER}-debug,7.2-debug"
 
 script:
-- echo "${PHP_VER}"
-- echo "${TAGS}"
 - cd "${PHP_VER:0:3}/alpine${ALPINE_VER}/fpm"
 - travis_retry make
 
 after_success:
-- echo "${PHP_VER}"
-- echo "${TAGS}"
 - . "${TRAVIS_BUILD_DIR}/release.sh"
 
 notifications:
