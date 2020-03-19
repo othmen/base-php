@@ -21,12 +21,12 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 
 Supported tags and respective `Dockerfile` links
 
-* `7.4.3`, `7.4`, `7`, `latest` [_(7.4/alpine3.11/fpm/Dockerfile.wodby)_]
-* `7.3.15`, `7.3` [_(7.3/alpine3.11/fpm/Dockerfile.wodby)_]
-* `7.2.28`, `7.2` [_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]
-* `7.4.3-debug`, `7.4-debug`, `7-debug` [_(7.4/alpine3.11/fpm/Dockerfile.wodby)_]
-* `7.3.15-debug`, `7.3-debug` [_(7.3/alpine3.11/fpm/Dockerfile.wodby)_]
-* `7.2.28-debug`, `7.2-debug` [_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]
+* `7.4.4`, `7.4`, `7`, `latest` [_(7.4/alpine3.11/fpm/Dockerfile.wodby)_]
+* `7.3.16`, `7.3` [_(7.3/alpine3.11/fpm/Dockerfile.wodby)_]
+* `7.2.29`, `7.2` [_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]
+* `7.4.4-debug`, `7.4-debug`, `7-debug` [_(7.4/alpine3.11/fpm/Dockerfile.wodby)_]
+* `7.3.16-debug`, `7.3-debug` [_(7.3/alpine3.11/fpm/Dockerfile.wodby)_]
+* `7.2.29-debug`, `7.2-debug` [_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]
 
 ## Configurable image with pre-compiled extensions
 
