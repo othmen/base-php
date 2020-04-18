@@ -23,10 +23,10 @@ Supported tags and respective `Dockerfile` links
 
 * `7.4.5`, `7.4`, `7`, `latest` [_(7.4/alpine3.11/fpm/Dockerfile.wodby)_]
 * `7.3.17`, `7.3` [_(7.3/alpine3.11/fpm/Dockerfile.wodby)_]
-* `7.2.29`, `7.2` [_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]
+* `7.2.30`, `7.2` [_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]
 * `7.4.5-debug`, `7.4-debug`, `7-debug` [_(7.4/alpine3.11/fpm/Dockerfile.wodby)_]
 * `7.3.17-debug`, `7.3-debug` [_(7.3/alpine3.11/fpm/Dockerfile.wodby)_]
-* `7.2.29-debug`, `7.2-debug` [_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]
+* `7.2.30-debug`, `7.2-debug` [_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]
 
 ## Configurable image with pre-compiled extensions
 
