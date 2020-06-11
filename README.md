@@ -17,7 +17,7 @@ This repository is a fork of https://github.com/docker-library/php with a few ch
 * Base image: [wodby/alpine](https://github.com/wodby/alpine)
 * [Travis CI builds](https://travis-ci.org/wodby/base-php) 
 * [Docker Hub](https://hub.docker.com/r/wodby/base-php)
-* Alpine version: 3.11
+* Alpine version: 3.12
 
 Supported tags and respective `Dockerfile` links
 
@@ -32,6 +32,6 @@ Supported tags and respective `Dockerfile` links
 
 For actual development and production usage see descendant image [wodby/php](https://github.com/wodby/php)
 
-[_(7.4/alpine3.11/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.4/alpine3.11/fpm/Dockerfile.wodby
-[_(7.3/alpine3.11/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.3/alpine3.11/fpm/Dockerfile.wodby
-[_(7.2/alpine3.11/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.2/alpine3.11/fpm/Dockerfile.wodby
+[_(7.4/alpine3.12/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.4/alpine3.11/fpm/Dockerfile.wodby
+[_(7.3/alpine3.12/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.3/alpine3.11/fpm/Dockerfile.wodby
+[_(7.2/alpine3.12/fpm/Dockerfile.wodby)_]: https://github.com/wodby/base-php/tree/master/7.2/alpine3.11/fpm/Dockerfile.wodby
