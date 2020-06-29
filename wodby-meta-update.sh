@@ -18,6 +18,17 @@ sed -i '/\$PHP_EXTRA_CONFIGURE_ARGS/i\        $(test "${PHP_DEBUG}" = 1 && echo 
 mv tmp Dockerfile-alpine.wodby.template
 cp update.sh tmp
 
+# Exclude 8.0-rc
+sed -i '/versions=( "${versions\[@\]%\/}" )/a\
+delete=(8.0-rc) \
+for target in "${delete[@]}"; do \
+  for i in "${!versions[@]}"; do \
+    if [[ ${versions[i]} = "${target}" ]]; then \
+      unset versions[i] \
+    fi \
+  done \
+done' tmp
+
 # Use our template for fmp alpine variants.
 sed -i 's/Dockerfile-alpine.template/Dockerfile-alpine.wodby.template/' tmp
 sed -i 's|\[ -d "$version/$suite/$variant" \]|\[ -f "$version/$suite/$variant/Dockerfile.wodby" \]|' tmp
