@@ -106,6 +106,7 @@ RUN set -eux; \
 		oniguruma-dev \
 		openssl-dev \
 		sqlite-dev \
+		imagemagick \
 	; \
 	\
 	export CFLAGS="$PHP_CFLAGS" \
